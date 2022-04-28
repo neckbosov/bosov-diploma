@@ -5,7 +5,7 @@ all:
 
 clean:
 	latexmk -c
-	rm -f *.snm *.nav *.vrb *.synctex.gz
+	rm -f *.snm *.nav *.vrb *.synctex.gz *.bbl *.log
 	rm -rf _minted-*
 
 FORCE:
