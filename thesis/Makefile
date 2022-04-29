@@ -1,7 +1,7 @@
 MAIN=thesis-main
 
 all:
-	latexmk -bibtex -pdf -ps- -dvi- -recorder -shell-escape -interaction=nonstopmode $(MAIN).tex
+	latexmk -pdf -ps- -dvi- -recorder -shell-escape -interaction=nonstopmode $(MAIN).tex
 
 clean:
 	latexmk -c
