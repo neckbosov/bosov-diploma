@@ -1,4 +1,4 @@
-% --------------------- ВКР СПбГУ -----------------------------
+% --------------------- Титульник ВКР СПбГУ -----------------------------
 % Автор: Тоскин Николай, itonik@me.com
 % Если заметили ошибку, напишите на email
 % Если хотите добавить изменение самостоятельно:
@@ -13,6 +13,7 @@
 % Титульный лист:
 % http://edu.spbu.ru/images/data/normativ_acts/local/20180703_6616_1.pdf
 % -----------------------------------------------------------------------
+
 % Глобальные поля
 \usepackage[left=30mm, top=20mm, right=15mm, bottom=20mm,nohead, includefoot,footskip=35pt]{geometry}
 
@@ -45,18 +46,24 @@
 
 % Размеры заголовков разделов и подразделов
 \usepackage{titlesec}
+% Раздел: 18pt, добавляем слово "Глава"
 \titleformat{\section}
 {\fontsize{18}{18}\bfseries}{
-\hspace{-1.5mm}\thesection. \hskip-1em}{1em}{}
+\hspace{-1.5mm}Глава \thesection. \hskip-1em}{1em}{}
 % Подраздел: 16pt
 \titleformat{\subsection}
-{\fontsize{16}{16}\bfseries}{\hspace{-0.2mm}\thesubsection. \hskip-1em}{1em}{}
+{\fontsize{16}{16}\bfseries}{\hspace{-0.2mm}\thesubsection}{1em}{}
 
-% Содержание
+% Сожержание
 % Выравнивание заголовка по центру (да, да, хак с отступом слева \hspace{0.31\textwidth})
 % т.к. окружение center и \centering не работают
 \renewcommand{\cfttoctitlefont}{\hspace{0.31\textwidth} \bfseries\Large}
 \renewcommand{\cftbeforetoctitleskip}{-1em}
+% Слово "Глава" в содержании
+\renewcommand{\cftsecpresnum}{Глава\space}
+\newlength\mylength
+\settowidth\mylength{\cftsecpresnum}
+\addtolength\cftsecnumwidth{\mylength}
 % Строки с точками
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 % Точки после цифр в в содержании
@@ -77,18 +84,15 @@
 % Пакет, который позволяет собирать один документ TeX из нескольких
 \usepackage{import}
 
-% Пакет, реализующий гиперссылки. Никакого раскрашивания
-\usepackage[colorlinks=false,hidelinks,unicode=true]{hyperref}
+% Пакет, реализующий гиперссылки. Никакого расскрашивания
+\usepackage[colorlinks=false,unicode=true]{hyperref}
 
 \newcommand{\ITEM}{\vspace{-0.2cm}\item}
 \newcommand{\MList}[1]{\par\begin{itemize}#1\end{itemize}}
 \newcommand{\NList}[1]{\par\begin{enumerate}#1\end{enumerate}}
 
 % Нумерация только тех формул, на которые в тексте присутствует ссылка
-\usepackage{autonum}
-
-\usepackage{url}
-\def\UrlBreaks{\do\/\do-}
+% \usepackage{autonum}
 
 % Список литературы
 \renewenvironment{thebibliography}[1]

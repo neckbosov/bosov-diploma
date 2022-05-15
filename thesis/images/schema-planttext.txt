@@ -1,0 +1,66 @@
+@startuml
+
+title Program Generator - Component Diagram
+
+:Teacher:
+:Student: as Student
+
+node "Web-server" {
+    [Program Generation Logic] as PGL
+    [Template Management Logic] as TML
+    [Program Data Access] as PDA  
+    [Template Data Access] as TDA
+} 
+
+node "Template Manager" {
+  [Template Files] as TF
+  [Web Client\nApplcation] as CLI
+}
+
+cloud "REST\nAPI" as REST {
+}
+
+Teacher -left-> CLI: "Run"
+TF -down-> CLI: "Compiled\nfiles"
+CLI -down-> REST: "Serialized templates"
+REST --> TML
+
+node "Client side" {
+     [Web Interface] as web
+}
+
+cloud "Web query" as Internet {
+}
+ 
+
+
+database "Database" {
+    [Stored Program Data]
+    [Stored Templates]
+}
+
+Student -right-> web
+web -down-> Internet: "Image/text request\nAnswer check"
+Internet -left--> PGL
+PGL -- PDA
+PGL -- TDA
+PDA ... [Stored Program Data]
+TML -- TDA
+TDA ... [Stored Templates]
+
+
+node "Program Runner" as ProgramRunner {
+ [Formatter]
+ [ImageGenerator]
+ [Compiler] 
+ [Executor]
+}
+
+PGL ---> Formatter
+Formatter -> ImageGenerator
+ImageGenerator -up---> PGL
+Formatter .> Compiler
+Formatter ..> Executor
+Compiler .> Executor
+Executor ---> PGL
+@enduml

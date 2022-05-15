@@ -25,6 +25,10 @@
 \usepackage{minted} % для примеров кода (требует параметра -shell-escape)
 \usemintedstyle{bw}
 
+\usepackage{csquotes}
+\usepackage[backend=biber,
+    sorting=none]{biblatex}
+\addbibresource{refs.bib}
 
 \begin{document}
 
@@ -49,6 +53,9 @@
 
 \include{items/concl}
 
-\bibliographystyle{unsrt} 
-\bibliography{refs}
+% \bibliographystyle{unsrt} 
+% \bibliography{refs}
+\begin{thebibliography}{1}
+    \printbibliography[heading=none]
+\end{thebibliography}
 \end{document}
