@@ -5,6 +5,7 @@
 \usepackage{cmap}
 \usepackage{paratype}
 \usepackage{minted} % для примеров кода (требует параметра -shell-escape)
+\usepackage{svg}
 
 \usetheme{metropolis}
 \usefonttheme[]{professionalfonts}  % запрещаем beamer'у перезаписывать мат. шрифты
@@ -40,167 +41,263 @@
 \begin{document}
 
 \begin{frame}[plain]
-  \begin{center}
-    \textbf{Имя и фамилия автора}
+    \begin{center}
+        \textbf{Никита Босов}
 
-    {\Large\textbf{Тема работы: довольно длинное название строки на две минимум}}
+        {\Large\textbf{Тема работы: расширяемый генератор синтаксически корректных программ для
+                обучения программированию}}
 
-    Выпускная квалификационная работа
+        Выпускная квалификационная работа
 
-    {\small Научный руководитель: А.\,А.\,Выбегалло}
+        {\small Научный руководитель: М.\,М.\,Заславский}
 
-    ДАТА ЗАЩИТЫ
-  \end{center}
+        15 июня 2022
+    \end{center}
 
 
-  \begin{columns}
-    \begin{column}{1cm}
-    \includegraphics[height=15mm,keepaspectratio]{./common/math-cs.pdf}
-    \end{column}
-    \begin{column}{10cm}
-      \small
-          Факультет математики и~компьютерных наук СПбГУ\\
-          Программа <<Современное программирование>>
-    \end{column}
-  \end{columns}
+    \begin{columns}
+        \begin{column}{1cm}
+            \includegraphics[height=15mm,keepaspectratio]{./common/math-cs.pdf}
+        \end{column}
+        \begin{column}{10cm}
+            \small
+            Факультет математики и~компьютерных наук СПбГУ\\
+            Программа <<Современное программирование>>
+        \end{column}
+    \end{columns}
 \end{frame}
 
 
 
 \begin{frame}
-\frametitle{Введение в предметную область}
+    \frametitle{Цель дипломной работы}
 
-\begin{itemize}
-\item О чём здесь вообще речь? Для чего вообще этим всем стоит заниматься?
-\item В чём актуальность работы?
-\item Кто ещё этим занимается, с кем мы будем сравниваться?
-\item Этот слайд необходим для того, чтобы постановка задачи была понятнее.
-\item Вряд ли стоит делать больше двух таких слайдов, иначе вы не успеете рассказать о своей работе.
-\item На введение в предметную область должно уйти не более 15\% времени вашего доклада.
-\end{itemize}
-
-
+    \begin{itemize}
+        \item На сегодняшний день существует множество курсов по обучению языкам программирования.
+        \item Одни из самых популярных задач в таких курсах~--- задачи вида <<что выведет данный код>>.
+        \item Для таких задач необходимо писать самому или искать примеры программ.
+        \item Цель проекта~--- создать генератор таких программ.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Постановка задачи}
-\begin{enumerate}
-\item Разработать алгоритм решения задачи путешествующего сейлсмена\footnote{Крайне рекомендуется избегать англицизмов --- старайтесь использовать принятые в~русском языке термины.}, работающий за полиномиальное время.
-\item Построить программную implementation\footnote{Так тоже не надо.}, протестировать её~производительность и сравнить с конкурентами.
-\item Оформить результаты работы в виде доклада на~STOC\footnote{Злоупотреблять аббревиатурами также не стоит, используйте только действительно общепринятые и всем известные сокращения.}.
-\end{enumerate}
+    \frametitle{Генераторы программ}
+    \begin{itemize}
+        \item Генератор программ~--- программа, генерирующая программный код согласно некоторым условиям.
+        \item Генераторы программ существуют достаточно давно, однако используются в основном для тестирования
+              компиляторов и интерпретаторов.
+    \end{itemize}
 \end{frame}
 
-\begin{frame}{Задача 1: формула с пояснениями}
-\small
-    Фильтр минимизирует среднеквадратическое отклонение цвета пикселя.
-    
-    \begin{equation*}\label{eq:wiener_nsr}
-    \hat{Y}(i, j) = \left[ \frac{\hat{H}^*(i, j)}{\left|\hat{H}(i, j)\right|^2 + \frac{S_n(i, j)}{S_s(i, j)}} \right] \times \hat{F}(i, j),
-    \end{equation*}
-\begin{itemize}
-    \item $Y$ -- восстановленное изображение,  $F$ -- наблюдаемое изображение,
-    \item $H$ -- функция рассеивания, $H^*$ --комплексное сопряжение $H$,
-    \item $S_n$ -- энергетический спектр шума -- $\left| \hat{N} \right|^2$,
-    \item $S_s$ -- энергетический спектр исходного изображения -- $\left| \hat{F} \right|^2$,
-    \item $\times$ -- умножение комплексных чисел.
-\end{itemize}
+\begin{frame}
+    \frametitle{Аналоги}
+    \begin{itemize}
+        \item Программы, используемые для тестирования компиляторов: Csmith, Yarpgen.
+        \item Deepsmith~--- инструмент, использующий машинное обучение.
+    \end{itemize}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Постановка задачи}
+    Разработать генератор примеров программ для обучения в виде текста или изображения с поддержкой
+    с возможностью генерации кода на разных языках программирования и управления задачами, на основе
+    которых генерируется код.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Схема генерации программ}
+    \begin{center}
+        \includegraphics[width=\textwidth]{images/generation-steps.drawio.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Подзадачи}
+    \begin{enumerate}
+        \item Разработка универсального представления сгенерированных программ (IR), которое можно
+              преобразовывать в код на разных языках программирования. Также разработать представление шаблонов,
+              которые можно сохранять в базу данных и преобразовывать в IR при подстановке параметров.
+        \item Разработка предметно-ориентированного языка построения шаблонов программ, генерирующего
+              вышеупомянутый шаблон.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Подзадачи}
+    \begin{enumerate}
+        \setcounter{enumi}{2}
+        \item Добавить возможность добавления и удаления шаблонов.
+        \item Добавить возможность генерации изображения программного кода.
+        \item Добавить возможность проверки ответов студентов.
+    \end{enumerate}
+\end{frame}
+
+% \begin{frame}{Задача 1: формула с пояснениями}
+%     \small
+%     Фильтр минимизирует среднеквадратическое отклонение цвета пикселя.
+
+%     \begin{equation*}\label{eq:wiener_nsr}
+%         \hat{Y}(i, j) = \left[ \frac{\hat{H}^*(i, j)}{\left|\hat{H}(i, j)\right|^2 + \frac{S_n(i, j)}{S_s(i, j)}} \right] \times \hat{F}(i, j),
+%     \end{equation*}
+%     \begin{itemize}
+%         \item $Y$ -- восстановленное изображение,  $F$ -- наблюдаемое изображение,
+%         \item $H$ -- функция рассеивания, $H^*$ --комплексное сопряжение $H$,
+%         \item $S_n$ -- энергетический спектр шума -- $\left| \hat{N} \right|^2$,
+%         \item $S_s$ -- энергетический спектр исходного изображения -- $\left| \hat{F} \right|^2$,
+%         \item $\times$ -- умножение комплексных чисел.
+%     \end{itemize}
+% \end{frame}
+
+
+\begin{frame}
+    \frametitle{Архитектура проекта и используемые технологии}
+    \begin{itemize}
+        \item Веб-сервер~--- фреймворк \texttt{Ktor}
+        \item Преобразование шаблонов кода в JSON~--- библиотека \texttt{Kotlinx.serialization}
+        \item База данных~--- \texttt{MongoDB}
+        \item Генерация изображений кода~--- библиотека \texttt{python-pygments}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Схема архитектуры проекта}
+    \begin{center}
+        \includegraphics[width=\textwidth]{images/architecture-landscape.drawio.png}
+    \end{center}
+\end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Задача 2: код на языке программирования\footnote{Увлекаться кодом на слайдах не стоит, зато структурные и иные диаграммы обычно смотрятся хорошо.}}
-\begin{minted}{kotlin}
-fun main() {
-    val name = "stranger"
-    println("Hi, $name!")
-    print("Current count:")
-    for (i in 0..10) {
-        print(" $i")
+    \frametitle{Пример генерации}
+    \textbf{DSL:}
+    \begin{minted}[fontsize=\footnotesize]{kotlin}
+val task = ProgramTemplate<PythonTag> {
+    val xVar = variable("x")
+    val stringLen = randomNumConstant(10, 20)
+    val randomString = randomStringConstant(stringLen)
+    addAssignment(xVar, randomString)
+    addIfElseInstr(funcCall("len", xVar) opLt constant(15)) {
+        addFuncCall("print", constant("small"))
+    }.addElse {
+        addFuncCall("print", constant("long"))
     }
 }
 \end{minted}
 \end{frame}
 
-\begin{frame}{Задача 2: результаты измерений в таблице}
-\centering
-\begin{tabular}{lccc}
-    Имя & Работа 1 & Работа 2 & Итог \\
-\hline\hline
-    Алиса & 8.0 & 9.0 & 8.5 \\
-    Боб & 9.0 & 9.8 & 9.4 \\
-    Чак & 9.1 & 9.3 & 9.2 \\
-\end{tabular}
+\begin{frame}[fragile]
+    \frametitle{Пример генерации}
+    \textbf{Сгенерированная программа:}\\
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            Текст программы
+            \begin{minted}[fontsize=\small]{python}
+x = ".W,hHm)1^,80^6"
+if len(x) < 15:
+    print("small")
+else:
+    print("long")
+            \end{minted}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            Изображение
+            \includegraphics[width=\textwidth]{images/code-image.png}
+        \end{column}
 
-\begin{block}{Пояснения к таблице}
-  \begin{itemize}
-  \item Таблицы могут требовать пояснений.
-  \item Что это за величины? Откуда они взялись?
-  \item Какие выводы можно сделать?
-  \end{itemize}
-\end{block}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Задача 2: результаты сравнения с конкурентами\footnote{Понятна ли ваша диаграмма? Не забыли ли вы легенду?}\footnote{Контрастно ли изображение? Помните, на проекторе всё может выглядеть хуже.}}
-\begin{center}
-\includegraphics[width=11cm]{images/graph.png}
-\end{center}
-\end{frame}
-
-\begin{frame}
-\frametitle{Задача 3: основные трудности}
-\begin{itemize}
-\item Мы всё классно сделали, но рецензенты STOC сформулировали ряд претензий к~работе, обозвали нас идиотами и отказались пускать на конференцию.
-\item Все замечания были исправлены, попробуем FOCS\footnote{Не забывайте про нежелательность англицизмов и аббревиатур.}!
-\end{itemize}
-
+    \end{columns}
+    % %     \begin{minted}[fontsize=\footnotesize]{kotlin}
+    % % val task = ProgramTemplate<PythonTag> {
+    % %     val xVar = variable("x")
+    % %     val stringLen = randomNumConstant(10, 20)
+    % %     val randomString = randomStringConstant(stringLen)
+    % %     addAssignment(xVar, randomString)
+    % %     addIfElseInstr(funcCall("len", xVar) opLt constant(15)) {
+    % %         addFuncCall("print", constant("small"))
+    % %     }.addElse {
+    % %         addFuncCall("print", constant("long"))
+    % %     }
+    % % }
+    % % \end{minted}
 \end{frame}
 
 \begin{frame}
-\frametitle{Дополнительный слайд по работе в целом\footnote{Кстати, слайды с длинными перечислениями выглядят плохо. Старайтесь их избегать.}}
-\begin{itemize}
-\item Освоенные и применённые технологии
-\item Информация о внедрении
-\item Полученные в ходе выполнения работы навыки
-\item Вынесенные уроки
-\item Реальные планы на будущее (не надо фантазировать!)
-\item Ссылки на цитированную литературу --- их можно вынести в конец слайдов, но во время доклада не показывать.
-\end{itemize}
-
+    \frametitle{Проверка ответов}
+    \begin{itemize}
+        \item Запуск программы и сохранение ее вывода происходит на этапе создания кода и изображения.
+        \item Сравнение ответов~--- построчно
+        \item Результат проверки~---- процент правильных строк в ответе.
+    \end{itemize}
 \end{frame}
 
+% \begin{frame}{Задача 2: результаты измерений в таблице}
+%     \centering
+%     \begin{tabular}{lccc}
+%         Имя   & Работа 1 & Работа 2 & Итог \\
+%         \hline\hline
+%         Алиса & 8.0      & 9.0      & 8.5  \\
+%         Боб   & 9.0      & 9.8      & 9.4  \\
+%         Чак   & 9.1      & 9.3      & 9.2  \\
+%     \end{tabular}
+
+%     \begin{block}{Пояснения к таблице}
+%         \begin{itemize}
+%             \item Таблицы могут требовать пояснений.
+%             \item Что это за величины? Откуда они взялись?
+%             \item Какие выводы можно сделать?
+%         \end{itemize}
+%     \end{block}
+
+% \end{frame}
+
+
+
+% \begin{frame}
+%     \frametitle{Задача 3: основные трудности}
+%     \begin{itemize}
+%         \item Мы всё классно сделали, но рецензенты STOC сформулировали ряд претензий к~работе, обозвали нас идиотами и отказались пускать на конференцию.
+%         \item Все замечания были исправлены, попробуем FOCS\footnote{Не забывайте про нежелательность англицизмов и аббревиатур.}!
+%     \end{itemize}
+
+% \end{frame}
 
 \begin{frame}
-\frametitle{Результаты работы}
-
-\begin{enumerate}
-\item Разработан полиномиальный алгоритм решения задачи коммивояжёра.
-\item Программная реализация демонстрирует высочайшую производительность и превосходит все известные аналоги.
-\item Результаты подготовлены для представления на~FOCS.
-\end{enumerate}
-
-\vspace{5mm}\hrule\vspace{5mm}
-
-\begin{center}
-Имя, фамилия и контакты автора,\\ссылка на материалы работы, QR-код.
-\end{center}
-
-\end{frame}
-
-\begin{frame}[noframenumbering,plain]
-\frametitle{}
-\begin{center}
-  \Huge Спасибо за внимание!
-
-  Ваши вопросы?
-
-  {\color{red}Этот слайд не нужен! Удалите его\footnote{Сноски на слайдах тоже удалите: не нужно усложнять их структуру и содержимое. Не~забывайте, что многое можно просто сказать словами.}!}
-\end{center}
+    \frametitle{Дальнейшее развитие}
+    \begin{itemize}
+        \item Поддержка новых элементов синтаксиса
+        \item Поддержка генерации кода на других императивных языках.
+        \item Интеграция в образовательные платформы (Moodle).
+    \end{itemize}
 \end{frame}
 
 
+% \begin{frame}
+%     \frametitle{Результаты работы}
+
+%     \begin{enumerate}
+%         \item Разработан полиномиальный алгоритм решения задачи коммивояжёра.
+%         \item Программная реализация демонстрирует высочайшую производительность и превосходит все известные аналоги.
+%         \item Результаты подготовлены для представления на~FOCS.
+%     \end{enumerate}
+
+%     \vspace{5mm}\hrule\vspace{5mm}
+
+%     \begin{center}
+%         Имя, фамилия и контакты автора,\\ссылка на материалы работы, QR-код.
+%     \end{center}
+
+% \end{frame}
+\begin{frame}
+    \frametitle{Результаты работы}
+
+    \begin{enumerate}
+        \item Разработан предметно-ориентированный язык для написания шаблонов программного кода.
+        \item Создано приложение для генерации примеров кода для учебных задач по шаблону и параметрам
+        с поддержкой проверки ответов. Данную систему можно расширять для поддержки других языков программирования.
+    \end{enumerate}
+        \vspace{5mm}\hrule\vspace{5mm}
+
+    \begin{center}
+        Никита Босов, \texttt{neckbosov@gmail.com},\\ \url{https://github.com/OSLL/bsc_bosov}
+    \end{center}
+\end{frame}
 
 \end{document}
