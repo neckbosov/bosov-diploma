@@ -1,0 +1,7 @@
+Usage: task-manager options_list
+Arguments: 
+    Command { Value should be one of [add, delete] }
+Options: 
+    --host [0.0.0.0] -> Host of code generator { String }
+    --port [8080] -> Port of code generator { Int }
+    --help, -h -> Usage info 

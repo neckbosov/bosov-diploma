@@ -4,8 +4,9 @@
 \usepackage[T2A]{fontenc}
 \usepackage{cmap}
 \usepackage{paratype}
+\usepackage{fancyvrb}
 \usepackage{minted} % для примеров кода (требует параметра -shell-escape)
-\usepackage{svg}
+% \usepackage{svg}
 % \usepackage{pdfpages}
 % \usepackage[pdftex]{graphicx}
 
@@ -71,23 +72,24 @@
 \end{frame}
 
 
-
 \begin{frame}
-    \frametitle{Цель дипломной работы}
-
-    \begin{itemize}
-        \item На сегодняшний день существует множество курсов по обучению языкам программирования.
-        \item Одни из самых популярных задач в таких курсах~--- задачи вида <<что выведет данный код>>.
-        \item Для таких задач на сегодняшний день необходимо писать самому или искать примеры программ.
-        \item Цель проекта~--- создать генератор таких программ.
-    \end{itemize}
+    \frametitle{Задачи для курсов по языкам программирования}
+    \begin{columns}
+        \begin{column}[]{0.45\textwidth}
+            \includegraphics[width=\textwidth]{images/python-quest.jpg}
+        \end{column}
+        \begin{column}[]{0.45\textwidth}
+            \includegraphics[width=\textwidth]{images/cpp-quest.jpg}
+        \end{column}
+    \end{columns}
 \end{frame}
+
 
 \begin{frame}
     \frametitle{Генераторы программ}
     \begin{itemize}
         \item Генератор программ~--- программа, генерирующая программный код согласно некоторым условиям.
-        \item Генераторы программ существуют достаточно давно, однако используются в основном для тестирования
+        \item Генераторы программ используются в основном для тестирования
               компиляторов и интерпретаторов.
     \end{itemize}
 \end{frame}
@@ -101,39 +103,45 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Постановка задачи}
-    Разработать генератор обучающих примеров программ в виде текста или изображения с поддержкой
-    генерации кода на разных языках программирования и управления задачами, на основе
-    которых генерируется код.
-\end{frame}
+    % \frametitle{Цель дипломной работы}
+    \textbf{Цель}~--- разработка генератора программ, позволяющего создавать примеры кода
+    (в виде текста или изображения) для
+    задач курсов обучения языкам программирования.
 
-
-\begin{frame}
-    \frametitle{Схема генерации программ}
-    \begin{center}
-        \includegraphics[width=\textwidth]{images/generation-steps.drawio.png}
-    \end{center}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Подзадачи}
+    \textbf{Задачи:}
     \begin{enumerate}
-        \item Разработка универсального представления сгенерированных программ (IR), которое можно
-              преобразовывать в код на разных языках программирования. Также разработать представление шаблонов,
-              которые можно сохранять в базу данных и преобразовывать в IR при подстановке параметров.
-        \item Разработка предметно-ориентированного языка построения шаблонов программ.
+        \item Разработать архитектуру генератора программ.
+        \item Разработать и описать способ задания основной логики программ.
+        \item Создать интерфейс для добавления поддержки генерации кода на разных ЯП.
+        \item Поддержать возможность проверки ответов студентов.
     \end{enumerate}
 \end{frame}
+% \begin{frame}
+%     \frametitle{Постановка задачи}
+%     Разработать генератор обучающих примеров программ в виде текста или изображения с поддержкой
+%     генерации кода на разных языках программирования и управления задачами, на основе
+%     которых генерируется код.
+% \end{frame}
 
-\begin{frame}
-    \frametitle{Подзадачи}
-    \begin{enumerate}
-        \setcounter{enumi}{2}
-        \item Добавить возможность добавления и удаления шаблонов.
-        \item Добавить возможность генерации изображения программного кода.
-        \item Добавить возможность проверки ответов студентов.
-    \end{enumerate}
-\end{frame}
+
+% \begin{frame}
+%     \frametitle{Подзадачи}
+%     \begin{enumerate}
+%         \item Разработка универсального представления сгенерированных программ (IR), которое можно
+%               преобразовывать в код на разных языках программирования. Также разработать представление шаблонов,
+%               которые можно сохранять в базу данных и преобразовывать в IR при подстановке параметров.
+%     \end{enumerate}
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Подзадачи}
+%     \begin{enumerate}
+%         \setcounter{enumi}{1}
+%         \item Добавить возможность добавления и удаления шаблонов.
+%         \item Добавить возможность генерации изображения программного кода.
+%         \item Добавить возможность проверки ответов студентов.
+%     \end{enumerate}
+% \end{frame}
 
 % \begin{frame}{Задача 1: формула с пояснениями}
 %     \small
@@ -151,37 +159,75 @@
 %     \end{itemize}
 % \end{frame}
 
-
 \begin{frame}
     \frametitle{Архитектура проекта и используемые технологии}
-    \begin{itemize}
-        \item Веб-сервер~--- фреймворк \texttt{Ktor}
-        \item Преобразование шаблонов кода в JSON~--- библиотека \texttt{Kotlinx.serialization}
-        \item База данных~--- \texttt{MongoDB}
-        \item Генерация изображений кода~--- библиотека \texttt{python-pygments}
-    \end{itemize}
+    \begin{center}
+        \includegraphics[width=\textwidth]{images/architecture-simple.pdf}
+    \end{center}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Схема архитектуры проекта}
+    \frametitle{Схема генерации программ}
     \begin{center}
-        \includegraphics[width=\textwidth]{images/architecture-landscape.drawio.png}
+        \includegraphics[width=\textwidth]{images/generation-steps.pdf}
     \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Пример генерации}
-    \textbf{DSL:}
-    \begin{minted}[fontsize=\footnotesize]{kotlin}
-val task = ProgramTemplate<PythonTag> {
-    val xVar = variable("x")
-    val stringLen = randomNumConstant(10, 20)
-    val randomString = randomStringConstant(stringLen)
-    addAssignment(xVar, randomString)
-    addIfElseInstr(funcCall("len", xVar) opLt constant(15)) {
-        addFuncCall("print", constant("small"))
-    }.addElse {
-        addFuncCall("print", constant("long"))
+    \textbf{Шаблон программы на Python:}\\
+    \begin{minted}[fontsize=\scriptsize]{kotlin}
+fun task(): ProgramTemplate<out ProgramLanguageTag> = ProgramTemplate<PythonTag> {
+    mainFun {
+        val xVar = variable("x")
+        val stringLen = randomNumConstant(10, 20)
+        val randomString = randomStringConstant(stringLen)
+        addVarDef(xVar, randomString)
+        `if`(funcCall("len", xVar) lt constant(15)) {
+            addFuncCall("print", constant("small"))
+        }.`else` {
+            addFuncCall("print", constant("long"))
+        }
+    }
+}
+\end{minted}
+\end{frame}
+\begin{frame}
+    \frametitle{Менеджер шаблонов}
+    \VerbatimInput[fontsize=\small]{images/task_manager_help.txt}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Пример генерации}
+    \textbf{Сгенерированная программа на Python:}\\
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            Текст программы
+            \VerbatimInput[fontsize=\scriptsize]{images/code_py.py}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            Изображение
+            \includegraphics[width=\textwidth]{images/code_image_py.png}
+        \end{column}
+
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Пример генерации}
+    \textbf{Шаблон программы на C++:}\\
+    \begin{minted}[fontsize=\scriptsize]{kotlin}
+fun task(): ProgramTemplate<out ProgramLanguageTag> = ProgramTemplate<CppTag> {
+    mainFun {
+        val xVar = variable("x")
+        val stringLen = randomNumConstant(10, 20)
+        val randomString = randomStringConstant(stringLen)
+        addVarDef(xVar, "string", randomString)
+        `if`(funcCall("size", xVar) lt constant(15)) {
+            addFuncCall("printf", constant("small"))
+        }.`else` {
+            addFuncCall("printf", constant("long"))
+        }
     }
 }
 \end{minted}
@@ -189,38 +235,20 @@ val task = ProgramTemplate<PythonTag> {
 
 \begin{frame}[fragile]
     \frametitle{Пример генерации}
-    \textbf{Сгенерированная программа:}\\
+    \textbf{Сгенерированная программа на C++:}\\
     \begin{columns}
         \begin{column}{0.45\textwidth}
             Текст программы
-            \begin{minted}[fontsize=\small]{python}
-x = ".W,hHm)1^,80^6"
-if len(x) < 15:
-    print("small")
-else:
-    print("long")
-            \end{minted}
+            \VerbatimInput[fontsize=\scriptsize]{images/code_cpp.cpp}
         \end{column}
         \begin{column}{0.45\textwidth}
             Изображение
-            \includegraphics[width=\textwidth]{images/code-image.png}
+            \includegraphics[width=\textwidth]{images/code_image_cpp.png}
         \end{column}
 
     \end{columns}
-    % %     \begin{minted}[fontsize=\footnotesize]{kotlin}
-    % % val task = ProgramTemplate<PythonTag> {
-    % %     val xVar = variable("x")
-    % %     val stringLen = randomNumConstant(10, 20)
-    % %     val randomString = randomStringConstant(stringLen)
-    % %     addAssignment(xVar, randomString)
-    % %     addIfElseInstr(funcCall("len", xVar) opLt constant(15)) {
-    % %         addFuncCall("print", constant("small"))
-    % %     }.addElse {
-    % %         addFuncCall("print", constant("long"))
-    % %     }
-    % % }
-    % % \end{minted}
 \end{frame}
+
 
 \begin{frame}
     \frametitle{Проверка ответов}
@@ -251,8 +279,6 @@ else:
 
 % \end{frame}
 
-
-
 % \begin{frame}
 %     \frametitle{Задача 3: основные трудности}
 %     \begin{itemize}
@@ -266,7 +292,9 @@ else:
     \frametitle{Дальнейшее развитие}
     \begin{itemize}
         \item Поддержка новых элементов синтаксиса
-        \item Поддержка генерации кода на других императивных языках.
+        \item Улучшение синтаксиса шаблонов.
+        \item Поддержка генерации кода на других языках программирования.
+        \item Улучшение качества генерируемых изображений.
         \item Интеграция в образовательные платформы (Moodle).
     \end{itemize}
 \end{frame}
@@ -290,17 +318,50 @@ else:
 % \end{frame}
 \begin{frame}
     \frametitle{Результаты работы}
+    Создано приложение для генерации примеров кода для учебных задач по шаблону и параметрам
+    с поддержкой проверки ответов. Данную систему можно расширять для поддержки других языков программирования.
 
-    \begin{enumerate}
-        \item Разработан предметно-ориентированный язык для написания шаблонов программного кода.
-        \item Создано приложение для генерации примеров кода для учебных задач по шаблону и параметрам
-        с поддержкой проверки ответов. Данную систему можно расширять для поддержки других языков программирования.
-    \end{enumerate}
-        \vspace{5mm}\hrule\vspace{5mm}
+    \vspace{5mm}\hrule\vspace{5mm}
 
     \begin{center}
-        Никита Босов, \texttt{neckbosov@gmail.com},\\ \url{https://github.com/OSLL/bsc_bosov}
+        \begin{columns}
+            \begin{column}[]{0.8\textwidth}
+                Никита Босов, \texttt{neckbosov@gmail.com},\\ \url{https://github.com/OSLL/bsc_bosov}
+            \end{column}
+            \begin{column}[]{0.15\textwidth}
+                \includegraphics[width=\textwidth]{images/github-qr.png}
+            \end{column}
+        \end{columns}
     \end{center}
+
+
 \end{frame}
 
+\newcounter{finalframe}
+\setcounter{finalframe}{\value{framenumber}}
+\begin{frame}[fragile]
+    \frametitle{Поддержка генерации кода на разных ЯП}
+    \begin{minted}[fontsize=\scriptsize]{kotlin}
+interface CodeMapper<LanguageTag : ProgramLanguageTag> {
+    fun generateCode(program: Program<in LanguageTag>): String
+}
+    \end{minted}
+    \begin{minted}[fontsize=\scriptsize]{js}
+{
+  "python": {
+    "extension": "py",
+    "formatCmd": "autopep8 -i $PROGRAM_PATH",
+    "compileCmd": null,
+    "runCmd": "python3 $PROGRAM_PATH"
+  },
+  "cpp": {
+    "extension": "cpp",
+    "formatCmd": "clang-format -i $PROGRAM_PATH",
+    "compileCmd": "g++ -std=c++20 -o $EXE_PATH $PROGRAM_PATH",
+    "runCmd": "$EXE_PATH"
+  }
+}
+    \end{minted}
+\end{frame}
+\setcounter{framenumber}{\value{finalframe}}
 \end{document}
